@@ -1,0 +1,19 @@
+{
+  "name": "homellc",
+  "version": "1.0.0",
+  "description": "A login and registration system",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Layoolar/homellc.git"
+  },
+  "author": "Olayiwola Ayoola",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Layoolar/homellc/issues"
+  },
+  "homepage": "https://github.com/Layoolar/homellc#readme"
+}
