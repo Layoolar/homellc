@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/Layoolar/homellc/issues"
   },
-  "homepage": "https://github.com/Layoolar/homellc#readme"
+  "homepage": "https://github.com/Layoolar/homellc#readme",
+  "dependencies": {
+    "mongoose": "^6.9.1"
+  }
 }
