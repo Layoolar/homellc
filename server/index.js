@@ -68,11 +68,26 @@ app.post('/api/login', async (req, res) => {
 			},
 			'2c0a25d0-7de3-42a3-8e91-0d03aa7f56a9'
 		)
-			console.log(token)
+		
 		return res.json({ status: 'ok', user: token })
 	} else {
 		console.log('false')
 		return res.json({ status: 'error', user: false })
+	}
+})
+
+app.get('/api/home', async (req, res) => {
+	const token = req.headers['x-access-token']
+
+	try {
+		const decoded = jsonwebtoken.verify(token, '2c0a25d0-7de3-42a3-8e91-0d03aa7f56a9')
+		const email = decoded.email
+		const user = await User.findOne({ email: email })
+
+		return res.json({ status: 'ok', name: `${user.firstName} ${user.lastName}` })
+	} catch (error) {
+		console.log(error)
+		res.json({ status: 'error', error: 'invalid token' })
 	}
 })
 
