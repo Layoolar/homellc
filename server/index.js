@@ -1,17 +1,19 @@
 const express = require('express');
 const app = express();
+const bodyParser = require('body-parser')
 const port = 1337;
 const cors = require('cors')
 const mongoose = require('mongoose')
 const User = require('./models/user.model')
 const bcrypt = require('bcryptjs')
-const bodyParser = require('body-parser')
+
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
+
 mongoose.connect('mongodb://localhost:27017/homellc')
 
 
 
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }))
 
 app.get('/', (req, res) => {
   res.send('Hello!')
@@ -25,7 +27,7 @@ app.post('/api/register', async (req, res) => {
 			firstName: req.body.firstName,
             lastName: req.body.lastName,
 			email: req.body.email,
-			password: password,
+			password: req.body.password,
             // firstName: "Test",
             // lastName: "Test",
 			// email: "test@test.com",
