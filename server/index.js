@@ -4,6 +4,7 @@ const cors = require('cors')
 const mongoose = require('mongoose')
 const User = require('./models/user.model')
 const bcrypt = require('bcryptjs')
+const jsonwebtoken = require('jsonwebtoken')
 const app = express()
 const port = 1337;
 // parse application/x-www-form-urlencoded
@@ -42,6 +43,38 @@ app.post('/api/register', async (req, res) => {
 	}
 })
 
+app.post('/api/login', async (req, res) => {
+	console.log(req.body)
+	const user = await User.findOne({
+		email: req.body.email,
+	})
+
+	if (!user) {
+		console.log('Invalid login')
+		return res.json({ status: 'error', error: 'Invalid login' })
+	}
+
+	const isPasswordValid = await bcrypt.compare(
+		req.body.password,
+		user.password
+	)
+
+	if (isPasswordValid) {
+		const token = jsonwebtoken.sign(
+			{
+				firstName: user.firstName,
+				lastName: user.lastName,
+				email: user.email,
+			},
+			'2c0a25d0-7de3-42a3-8e91-0d03aa7f56a9'
+		)
+			console.log(token)
+		return res.json({ status: 'ok', user: token })
+	} else {
+		console.log('false')
+		return res.json({ status: 'error', user: false })
+	}
+})
 
 
 
