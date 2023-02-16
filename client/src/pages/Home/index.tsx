@@ -1,9 +1,13 @@
 import React from 'react'
 
-export default function Index() {
+function Index() {
   return (
-    <div>
-      "HI"
-    </div>
+    <section>
+    <div className='users__wrapper'>
+        <h1 className='heading'>Users</h1>
+        </div>
+    </section>
   )
 }
+
+export default Index
