@@ -30,19 +30,13 @@ const Navbar = ({isNavOpen, setIsNavOpen }: Props) => {
           <Searchbar />
         </div>
         <div className='interactive__board__content'>
-          <div className='xl__hide'><a href="https://github.com/Layoolar/homellc" target={'_blank'}>Docs</a></div>
+          {/* <div className='xl__hide'><a href="https://github.com/Layoolar/homellc" target={'_blank'}>Docs</a></div> */}
           {/* <BellIcon /> */}
           <div className='user__actions'>
-            <img src={require('./profile__user.png')} alt="user__icon" onClick={() => setIsUserMenuOpen(!isUserMenuOpen)} />
-            <h2 className=' xm__hide'>{'Olayiwola'}</h2>
-            <span className='xm__hide' onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}>
-              <CaretDownIcon />
-            </span>
-            {isUserMenuOpen && (
-              <ul className='user__menu'>
-                <li onClick={handleLogout}>Logout</li>
-              </ul>
-            )}
+            {/* <img src={require('./profile__user.png')} alt="user__icon" onClick={() => setIsUserMenuOpen(!isUserMenuOpen)} /> */}
+            
+            <h2 className='xm__hide'>{'Olayiwola'}</h2>
+            <h2 className='user__logout' onClick={handleLogout}>Logout</h2>
           </div>
         </div>
       </div>

@@ -12,7 +12,7 @@ import { Suspense } from 'react'
 import Layout from './components/Layout/Index';
 
 
-function App() {
+function App(): JSX.Element {
 
   // const renderLoader = () => <LoadingScreen />
 
@@ -24,6 +24,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/" element={<Layout children={<Home />} />} />
+          <Route path="/home" element={<Layout children={<Home />} />} />
         </Routes>
       </Router>
     </Suspense>
@@ -35,27 +36,3 @@ export default App;
 
 
 
-// import React, {FC} from 'react';
-// import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-// // import { Login, Register, Home } from "./pages";
-// import Login from './pages/Login';
-// import Register from './pages/Register';
-// import Home from './pages/Home';
-// import Hamburger from './components/Icons/Hamburger';
-// // import Home from './pages/Home';
-
-// function App(): JSX.Element {
-//   return (
-//       <Hamburger />
-//     // <div>
-//     //    <BrowserRouter>
-//     //     <Route path="/login" element={<Login />} />
-//     //     <Route path="/" element={<Login />} />
-//     //     <Route path="/register" element={<Register />} />
-//     //     {/* <Route path="/home" element={<Home />} /> */}
-//     //   </BrowserRouter>
-//     // </div>
-//   );
-// }
-
-// export default App;

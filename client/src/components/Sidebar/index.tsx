@@ -4,8 +4,6 @@ import CaretDownIcon from '../Icons/CaretDownIcon'
 import './sidebar.scss'
 import { NavLink } from 'react-router-dom'
 import { motion } from 'framer-motion'
-
-
 interface Props {
   isNavOpen: boolean
 }
@@ -15,135 +13,59 @@ const index = ({ isNavOpen }: Props) => {
     borderLeft: '3px solid #39CDCC',
   }
 
-const navLinks: { title: string; icon: string; href: string, category: string }[] = [
+
+const navLinks: { title: string; href: string, category: string }[] = [
     {
-        title: 'Dashboard',
-        href: '/dashboard',
-        icon: './dashboard.png',
-        category: 'dashboard',
+        title: 'Home',
+        href: '/home',
+        category: 'home',
     },
     {
-        title: 'Users',
-        href: '/users',
-        icon: './users.png',
-        category: 'customer',
-    },
-    {
-        title: 'Guarantors',
+        title: 'Calculator',
         href: '/#&',
-        icon: './guarantor.png',
-        category: 'customer',
+        category: 'details',
     },
     {
-        title: 'Loans',
+        title: 'Process',
         href: '/#&',
-        icon: './loans.png',
-        category: 'customer',
+        category: 'details',
     },
     {
-        title: 'Decision Models',
+        title: 'Benefits',
         href: '/#&',
-        icon: './decision.png',
-        category: 'customer',
+        category: 'details',
     },
     {
-        title: 'Savings',
+        title: 'Constraints',
         href: '/#&',
-        icon: './savings.png',
-        category: 'customer',
+        category: 'details',
     },
     {
-        title: 'Loan Requests',
+        title: 'Home Ownership Guide',
         href: '/#&',
-        icon: './loanRequest.png',
-        category: 'customer',
+        category: 'blog',
     },
     {
-        title: 'Whitelist',
+        title: 'Market Insights',
         href: '/#&',
-        icon: './whitelist.png',
-        category: 'customer',
+        category: 'blog',
     },
     {
-        title: 'Karma',
+        title: 'Expert Interviews',
         href: '/#&',
-        icon: './karma.png',
-        category: 'customer',
+        category: 'blog',
     },
     {
-        title: 'Organization',
+        title: 'Check If You Qualify',
         href: '/#&',
-        icon: './organization.png',
-        category: 'business',
+        category: 'others',
     },
     {
-        title: 'Loan Products',
+        title: 'Schedule A Call',
         href: '/#&',
-        icon: './loanProducts.png',
-        category: 'business',
-    },
-    {
-        title: 'Savings Products',
-        href: '/#&',
-        icon: './savingsProducts.png',
-        category: 'business',
-    },
-    {
-        title: 'Fees and Charges',
-        href: '/#&',
-        icon: './feesAndCharges.png',
-        category: 'business',
-    },
-    {
-        title: 'Transactions',
-        href: '/#&',
-        icon: './transactions.png',
-        category: 'business',
-    },
-    {
-        title: 'Services',
-        href: '/#&',
-        icon: './services.png',
-        category: 'business',
-    },
-    {
-        title: 'Service Account',
-        href: '/#&',
-        icon: './serviceAccount.png',
-        category: 'business',
-    },
-    {
-        title: 'Settlements',
-        href: '/#&',
-        icon: './settlements.png',
-        category: 'business',
-    },
-    {
-        title: 'Reports',
-        href: '/#&',
-        icon: './reports.png',
-        category: 'business',
-    },
-    {
-        title: 'Preferences',
-        href: '/#&',
-        icon: './preferences.png',
-        category: 'settings',
-    },
-    {
-        title: 'Fees and Pricing',
-        href: '/#&',
-        icon: './feesAndPricing.png',
-        category: 'settings',
-    },
-    {
-        title: 'Audit Logs',
-        href: '/#&',
-        icon: './auditLogs.png',
-        category: 'settings',
+        category: 'others',
     },
   ]
-
 
   const navLinkSequence = (i: number, navlink: any) => (
     <motion.span
@@ -154,55 +76,47 @@ const navLinks: { title: string; icon: string; href: string, category: string }[
       <NavLink to={navlink.href} className='navlinks'
         style={({ isActive }) => isActive ? isActiveStyle : undefined}
       >
-        <img src={require(`${navlink.icon}`)} alt={`${navlink.title}_icon_group`} />
         <p>{navlink.title}</p>
       </NavLink>
     </motion.span>
   )
 
-  const renderDashboard = navLinks.filter((val => val.category.includes('dashboard'))).map((navlink, i) => (
+  const renderHome = navLinks.filter((val => val.category.includes('home'))).map((navlink, i) => (
+    navLinkSequence(i, navlink)
+  ))
+    const renderDetails = navLinks.filter((val => val.category.includes('details'))).map((navlink, i) => (
     navLinkSequence(i, navlink)
   ))
 
-  const renderCustomersNav = navLinks.filter((val => val.category.includes('customer'))).map((navlink, i) => (
+  const renderBlog = navLinks.filter((val => val.category.includes('blog'))).map((navlink, i) => (
     navLinkSequence(i, navlink)
   ))
 
-  const renderBusinessNav = navLinks.filter((val => val.category.includes('business'))).map((navlink, i) => (
+  const renderOthers = navLinks.filter((val => val.category.includes('others'))).map((navlink, i) => (
     navLinkSequence(i, navlink)
   ))
 
-  const renderSettingsNav = navLinks.filter((val => val.category.includes('settings'))).map((navlink, i) => (
-    navLinkSequence(i, navlink)
-  ))
+
 
   return (
     <>
       {isNavOpen &&
         <motion.section
-        //   variants={animationRightVariant}
           initial="initial"
           animate="final"
           exit="exit"
           className='sidebar__wrapper'>
           <div className='sidebar__content'>
-            <div className='switch_org_toggle'>
-              {/* <Suitcase /> */}
-              Switch Organization
-              <CaretDownIcon />
-            </div>
+            {renderHome}
 
-            <h1 className='section__header'>&nbsp;</h1>
-            {renderDashboard}
+            <h1 className='section__header'>Details</h1>
+            {renderDetails}
 
-            <h1 className='section__header'>Customers</h1>
-            {renderCustomersNav}
+            <h1 className='section__header'>Blog</h1>
+            {renderBlog}
 
-            <h1 className='section__header'>Businesses</h1>
-            {renderBusinessNav}
-
-            <h1 className='section__header'>Settings</h1>
-            {renderSettingsNav}
+            <h1 className='section__header'>Others</h1>
+            {renderOthers}
 
           </div>
         </motion.section>}
