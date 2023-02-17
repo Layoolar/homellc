@@ -9,7 +9,7 @@ const bcrypt = require('bcryptjs')
 const jsonwebtoken = require('jsonwebtoken')
 const rateLimit = require('express-rate-limit');
 const app = express()
-const port = 1337;
+const port = 1338;
 app.use(cors())
 
 // Request Parser
