@@ -116,12 +116,30 @@ app.post('/api/login', async (req, res) => {
 			},
 			process.env.JWT_SECRET
 		)
-		
-		return res.json({ status: 'ok', user: token })
+		const name = `${user.firstName} ${user.lastName}`; 
+		return res.json({ status: 'ok', userToken: token, username: name })
 	} else {
 		return res.json({ status: 'error', error: 'Invalid password' });
 	}
 })
+
+app.post('/api/logout', async (req, res) => {
+  const token = req.headers['x-access-token'];
+  try {
+    // Verify token and get user email
+    const decoded = jsonwebtoken.verify(token, process.env.JWT_SECRET);
+    const email = decoded.email;
+
+    // Invalidate the token
+    // In this example, we're simply removing the token from the user's record
+    await User.updateOne({ email: email }, { $unset: { token: 1 } });
+
+    res.json({ status: 'ok' });
+  } catch (error) {
+    res.json({ status: 'error', error: 'invalid token' });
+  }
+});
+
 
 
 
