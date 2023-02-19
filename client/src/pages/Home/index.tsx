@@ -1,4 +1,8 @@
 import React from 'react'
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+
 
 function Index() {
   return (
@@ -27,13 +31,6 @@ Section 1.10.33 of "de Finibus Bonorum et Malorum", written by Cicero in 45 BC
       </div>
       }
     </section>
-    // <section>
-    // <div className='users__wrapper'>
-    //     <h1 className='heading'>Dashboard</h1>
-
-    //     "Hi"
-    //     </div>
-    // </section>
   )
 }
 

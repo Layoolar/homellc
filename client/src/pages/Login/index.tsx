@@ -3,12 +3,11 @@ import LoginIllustration from '../../components/Icons/LoginIllustration'
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import LogoIcon from '../../components/Icons/LogoIcon'
-import Input from '../../components/Shared/Input'
 import Button from '../../components/Shared/Button/Index'
 import '../Login/login.scss'
 import { useNavigate } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify';
-import { login } from "../../store/slices/auth/loginSlice";
+import { login, removeError } from "../../store/slices/auth/loginSlice";
 import { useAppDispatch } from "../../store/hooks";
 import { useSelector } from 'react-redux';
 
@@ -42,6 +41,7 @@ const Index = () => {
       navigate("/home");
     } else if (failed) {
       toast.error(failed);
+      dispatch(removeError())
     }
 }, [success, failed, navigate]);
 
@@ -58,7 +58,9 @@ const Index = () => {
   };
   
 
-    // navigate('/dashboard')
+    const handleClick = () => {
+      navigate("/register")
+    }
   
 
   
@@ -95,13 +97,8 @@ const Index = () => {
                   
                 />
                 <ErrorMessage name='password' render={msg => <div className="error">{msg}</div>} />
-
                 <div className='forgot__password'>
-                  <a href="#">Forgot Password</a>
-
-                </div>
-                <div className='forgot__password'>
-                  <a href="#">Don't Have An Account?</a>
+                  <a href="#" onClick={handleClick}>Don't Have An Account?</a>
                   
                 </div>
 

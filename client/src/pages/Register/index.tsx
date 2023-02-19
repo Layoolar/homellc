@@ -3,12 +3,11 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import LoginIllustration from '../../components/Icons/LoginIllustration'
 import LogoIcon from '../../components/Icons/LogoIcon'
-import Input from '../../components/Shared/Input'
 import Button from '../../components/Shared/Button/Index'
 import '../Register/register.scss'
 import { useNavigate } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify';
-import { register, registrationSuccess, setSuccess } from '../../store/slices/auth/registerationSlice';
+import { register, registrationSuccess, setSuccess, removeError } from '../../store/slices/auth/registerationSlice';
 import { useAppDispatch } from '../../store/hooks';
 import { useSelector } from 'react-redux';
 
@@ -54,25 +53,21 @@ useEffect(() => {
       dispatch(setSuccess(false));
     } else if (failed) {
       toast.error(failed);
+      dispatch(removeError())
     }
 }, [success, failed, navigate, dispatch]);
-
-
-
-
 
     const handleSubmit = async (values: RegistrationValues, { setSubmitting, resetForm }: { setSubmitting: (isSubmitting: boolean) => void, resetForm: () => void }) => {
     const { firstName, lastName, email, password } = values;
     await dispatch(register({firstName, lastName, email, password}));
     setSubmitting(false);
     resetForm();
-    // if (success) {
-    //   toast.success('Registration successful!');
-    //   navigate('/login');
-    // }
   };
 
-
+  const handleClick =() => {
+    dispatch(removeError())
+    navigate("/login")
+  }
   
 
   return (
@@ -136,12 +131,8 @@ useEffect(() => {
 
                 />
                 <ErrorMessage name='confirmPassword' render={msg => <div className="error">{msg}</div>} />
-
                 <div className='forgot__password'>
-                  <a href="#">Forgot Password</a>
-                </div>
-                <div className='forgot__password'>
-                  <a href="#">Already Have An Account?</a>
+                  <a href="#" onClick={handleClick}>Already Have An Account?</a>
                 </div>
 
                 <Button children={'Register'} type="submit" background={'bg__cyan'} text_transform={'text__transform'} padding={'btn__padding'}

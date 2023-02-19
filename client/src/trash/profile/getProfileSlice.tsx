@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { apiCallBegan } from "../../store/apiActions";
 import { AppDispatch } from "../../store/configureStore";
-import { PRE_URL } from "../../utils/ENV/envs";
+import { PRE_URL } from "../ENV/envs";
 import {
   retrieveUserDetails,
   storeUserDetails,
@@ -25,11 +25,9 @@ const getProfileSlice = createSlice({
     getProfileReceived: (state, action) => {
       state.loading = false;
       state.userData = action.payload;
-      console.log("getProfileReceived", action.payload);
     },
     getProfileRequestFailed: (state, action) => {
       state.loading = false;
-      console.log("getProfileRequestFailed", action.payload);
     },
   },
 });
@@ -44,7 +42,6 @@ export const getProfile = () => async (dispatch: AppDispatch) => {
     const getToken: any = await retrieveUserDetails();
     if (getToken && getToken.token) {
       const token = getToken.token;
-      console.log("token", token);
       dispatch(
         apiCallBegan({
           url: PRE_URL + "user/profile/",

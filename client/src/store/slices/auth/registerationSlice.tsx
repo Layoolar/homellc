@@ -1,9 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { apiCallBegan } from "../../apiActions";
 import { AppDispatch } from "../../configureStore";
-import { PRE_URL } from "../../../utils/ENV/envs";
-import { useNavigate } from 'react-router-dom';
-import { login } from './loginSlice';
 
 const initialState = {
   loading: false,
@@ -33,10 +30,13 @@ const registrationSlice = createSlice({
       state.success = false;
       state.error = action.payload.response.data.error;
     },
+    removeError: (state) => {
+      state.error = null ;
+    }
   },
 });
 
-export const { setSuccess, registrationRequested, registrationSuccess, registrationFailed } = registrationSlice.actions;
+export const { setSuccess, registrationRequested, registrationSuccess, registrationFailed, removeError } = registrationSlice.actions;
 
 export default registrationSlice.reducer;
 

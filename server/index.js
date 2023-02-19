@@ -27,23 +27,8 @@ app.use(rateLimit({
 // Database connection
 mongoose.connect(process.env.MONGODB_URI)
 
-app.get('/api/', async (req, res) => {
-	const token = req.headers['x-access-token']
-	try {
-		const decoded = jsonwebtoken.verify(token, process.env.JWT_SECRET)
-		const email = decoded.email
-		const user = await User.findOne({ email: email })
-
-		return res.status(200).json({ status: 'ok', name: `${user.firstName} ${user.lastName}` })
-	} catch (error) {
-		res.status(200).json({ status: 'ok' })
-	}
-})
-
-
 app.post('/api/register', async (req, res) => {
   try {
-	console.log(req.body)
     // Validate and sanitize user input
     const firstName = validator.trim(req.body.firstName)
     const lastName = validator.trim(req.body.lastName)
@@ -76,12 +61,8 @@ app.post('/api/register', async (req, res) => {
 
 	}
 
-
-
-
     // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10)
-	console.log(hashedPassword)
     // Create a new user
     const user = await User.create({
       firstName,
@@ -98,7 +79,6 @@ app.post('/api/register', async (req, res) => {
 
 
 app.post('/api/login', async (req, res) => {
-	// console.log(req.body);
 	const email = req.body.email;
 	const password = req.body.password;
 
@@ -132,32 +112,11 @@ app.post('/api/login', async (req, res) => {
 			process.env.JWT_SECRET
 		)
 		const name = `${user.firstName} ${user.lastName}`; 
-    console.log(token);
 		return res.status(200).json({ status: 'ok', userToken: token, userName: name  })
 	} else {
 		return res.status(400).json({error: 'Invalid password' });
 	}
 })
-
-app.post('/api/logout', async (req, res) => {
-  const token = req.headers['x-access-token'];
-  try {
-    // Verify token and get user email
-    const decoded = jsonwebtoken.verify(token, process.env.JWT_SECRET);
-    const email = decoded.email;
-
-    // Invalidate the token
-    // In this example, we're simply removing the token from the user's record
-    await User.updateOne({ email: email }, { $unset: { token: 1 } });
-
-    res.status(200).json({ status: 'ok' });
-  } catch (error) {
-    res.status(400).json({error: 'invalid token' });
-  }
-});
-
-
-
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
