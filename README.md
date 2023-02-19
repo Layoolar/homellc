@@ -1,11 +1,11 @@
-###Table of content 
-[Description](#Description) 
-[Capabilities)(#Capabilities) 
-[Extra Features](#Extra Features) 
-[Demo](#Demo) 
-[NPM start](#NPM start) 
-[Node index.js](#Node index.js)
-[Database Configuration](#Database Configuration) 
+ ##Table of content 
+ - [Description](#description) 
+- [Capabilities](#capabilities) 
+- [Extra Features](#extra-features) 
+- [Demo](#demo) 
+- [NPM start](#npm-start) 
+- [Node index.js](#node-indexjs)
+- [Database Configuration](#database-configuration) 
 
 
 ### Description 
@@ -39,7 +39,7 @@ Some of the other technologies used:
 - [Bcrypt](github.com/kelektiv/node.bcrypt.js)
 - [Jsonwebtoken](github.com/auth0/node-jsonwebtoken)
 
-# About HomeLLC
+##### About HomeLLC
 
 Home LLC is solving the homeownership crisis to tackle income inequality in America.
 They provide debt-free capital to home buyers and home owners in exchange for sharing a small part of their future appreciation. This way, everyday people as well as investors can build wealth together.
@@ -72,8 +72,8 @@ Runs the client in the development mode.
 Open [http://localhost:3000](http://localhost:3000)
 
 
-### Node index.js
-Starts the server.
+### Node indexjs
+Start the server with 'node index.js'
 Runs the server on development mode
 Test the API with [http://localhost:1338](http://localhost:1338)
 
