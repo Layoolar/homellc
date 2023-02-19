@@ -34,15 +34,16 @@ app.get('/api/', async (req, res) => {
 		const email = decoded.email
 		const user = await User.findOne({ email: email })
 
-		return res.json({ status: 'ok', name: `${user.firstName} ${user.lastName}` })
+		return res.status(200).json({ status: 'ok', name: `${user.firstName} ${user.lastName}` })
 	} catch (error) {
-		res.json({ status: 'error', error: 'invalid user' })
+		res.status(200).json({ status: 'ok' })
 	}
 })
 
 
 app.post('/api/register', async (req, res) => {
   try {
+	console.log(req.body)
     // Validate and sanitize user input
     const firstName = validator.trim(req.body.firstName)
     const lastName = validator.trim(req.body.lastName)
@@ -65,9 +66,22 @@ app.post('/api/register', async (req, res) => {
       return res.status(400).json({ error: 'Password must be at least 8 characters long' })
     }
 
+
+    	const finduser = await User.findOne({
+		email: email,
+	})
+
+	if (finduser) {
+		return res.status(400).json({ error: 'User account already exist' })
+
+	}
+
+
+
+
     // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10)
-
+	console.log(hashedPassword)
     // Create a new user
     const user = await User.create({
       firstName,
@@ -75,21 +89,22 @@ app.post('/api/register', async (req, res) => {
       email,
       password: hashedPassword
     })
-
-    res.json({ status: 'ok' })
+    console/log('ok');
+    res.status(200).json({ status: 'ok' })
   } catch (err) {
-    res.status(500).json({ error: err.message })
+    res.status(400).json({ error: "Unable to register" })
   }
 })
 
 
 app.post('/api/login', async (req, res) => {
+	// console.log(req.body);
 	const email = req.body.email;
 	const password = req.body.password;
 
 	// Validate email
 	if (!validator.isEmail(email)) {
-		return res.json({ status: 'error', error: 'Invalid email format' });
+		return res.status(400).json({error: 'Invalid email format' });
 	}
 
 	const user = await User.findOne({
@@ -97,12 +112,12 @@ app.post('/api/login', async (req, res) => {
 	})
 
 	if (!user) {
-		return res.json({ status: 'error', error: 'Invalid login' })
+		return res.status(400).json({ error: 'Invalid login' })
 	}
 
 	// Validate password
 	if (!validator.isLength(password, { min: 8 })) {
-		return res.json({ status: 'error', error: 'Password must be at least 8 characters long' });
+		return res.status(400).json({ status: 'error', error: 'Password must be at least 8 characters long' });
 	}
 
 	const isPasswordValid = await bcrypt.compare(password, user.password);
@@ -117,9 +132,10 @@ app.post('/api/login', async (req, res) => {
 			process.env.JWT_SECRET
 		)
 		const name = `${user.firstName} ${user.lastName}`; 
-		return res.json({ status: 'ok', userToken: token, username: name })
+    console.log(token);
+		return res.status(200).json({ status: 'ok', userToken: token, username: name  })
 	} else {
-		return res.json({ status: 'error', error: 'Invalid password' });
+		return res.status(400).json({error: 'Invalid password' });
 	}
 })
 
@@ -134,9 +150,9 @@ app.post('/api/logout', async (req, res) => {
     // In this example, we're simply removing the token from the user's record
     await User.updateOne({ email: email }, { $unset: { token: 1 } });
 
-    res.json({ status: 'ok' });
+    res.status(200).json({ status: 'ok' });
   } catch (error) {
-    res.json({ status: 'error', error: 'invalid token' });
+    res.status(400).json({error: 'invalid token' });
   }
 });
 

@@ -9,6 +9,7 @@ interface Props {
     padding?: string,
     type?: "button" | "submit" | "reset";
     onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+    disabled?: boolean,
 }
 
 const Index = ({ children, onClick, background, color, type, padding, text_transform }: Props) => {

@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
 import LoginIllustration from '../../components/Icons/LoginIllustration'
 import LogoIcon from '../../components/Icons/LogoIcon'
 import Input from '../../components/Shared/Input'
@@ -6,51 +8,52 @@ import Button from '../../components/Shared/Button/Index'
 import '../Register/register.scss'
 import { useNavigate } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify';
+import { register, registrationSuccess } from '../../store/slices/auth/registerationSlice';
+import { useAppDispatch } from '../../store/hooks';
+import { useSelector } from 'react-redux';
 
+interface RegistrationValues {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
+
+const RegistrationSchema = Yup.object().shape({
+  firstName: Yup.string().required('Please enter your first name'),
+  lastName: Yup.string().required('Please enter your last name'),
+  email: Yup.string().email('Email is invalid').required('Please enter your email'),
+  password: Yup.string().required('Please enter your password'),
+  confirmPassword: Yup.string()
+    .oneOf([Yup.ref('password'), undefined], 'Passwords do not match')
+    .required('Please confirm your password'),
+});
+
+
+// const navigate = useNavigate()
 
 const Index = () => {
-  // const navigate = useNavigate()
-   const initialValues = {
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: ""
+  const dispatch = useAppDispatch();
+  const success = useSelector((state: any) => state.authReducers.register.success);
+  const initialValues: RegistrationValues = {
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+  };
+    const handleSubmit = async (values: RegistrationValues, { setSubmitting, resetForm }: { setSubmitting: (isSubmitting: boolean) => void, resetForm: () => void }) => {
+    const { firstName, lastName, email, password } = values;
+    await dispatch(register({firstName, lastName, email, password}));
+    setSubmitting(false);
+    resetForm();
+    // if (success) {
+    //   toast.success('Registration successful!');
+    //   navigate('/login');
+    // }
   };
 
-  const [values, setValues] = useState<any>(initialValues);
-  const [isVisible, setIsVisible] = useState<boolean>(false);
-  const [inputType, setInputType] = useState<string>('password');
-
-  const onHandleInputChange = (e: any) => {
-    const { name, value } = e.target;
-    setValues({
-      ...values,
-      [name]: value,
-    });
-  };
-
-
-  const handleToggle = () => {
-    if(inputType === "password") {
-        setInputType('text')
-        setIsVisible(!isVisible)
-    } else {
-      setInputType('password')
-      setIsVisible(!isVisible)
-    }
-  }
-
-  const registerAction = (e: any) => {
-    e.preventDefault();
-
-    if(values.email === "" || values.password === "" ||
-    values.confirmPassword === "" || values.firstName === "" ||
-    values.lastName === "" ) {
-      toast.error("fields can't be empty")
-    }
-
-    // navigate('/dashboard')
-  }
 
   
 
@@ -68,45 +71,68 @@ const Index = () => {
           <article>Enter details to register.</article>
           
           
-          <form onSubmit={e => registerAction(e)}>
-            <Input
-              name={'firstName'}
-              value={values.firstName}
-              type='text'
-              onHandleInputChange={(e) => onHandleInputChange(e)}
-              placeholder={'First Name'}
-              input__class={'input__styles'}
-            />
-            <Input
-              name={'lastName'}
-              value={values.lastName}
-              type='text'
-              onHandleInputChange={(e) => onHandleInputChange(e)}
-              placeholder={'Last Name'}
-              input__class={'input__styles'}
-            />
-            <Input
-              name={'email'}
-              value={values.email}
-              type='email'
-              onHandleInputChange={(e) => onHandleInputChange(e)}
-              placeholder={'Email'}
-              input__class={'input__styles'}
-            />
-            <Input
-              name={'password'}
-              value={values.password}
-              type={inputType}
-              onHandleInputChange={(e) => onHandleInputChange(e)}
-              placeholder={'Password'}
-              input__class={'input__styles'}
-              variable_x={!isVisible ? 'SHOW' : 'HIDE'}
-              onClick={handleToggle}
-              component__wrap={'password__styles'}
-            />
-            
-            <Button children={'Register'} type="submit" background={'bg__cyan'} text_transform={'text__transform'} padding={'btn__padding'} />
-          </form>
+          <Formik initialValues={initialValues} validationSchema={RegistrationSchema} onSubmit={handleSubmit}>
+            {({ isSubmitting }) => (
+              <Form>
+                <Field
+                  name='firstName'
+                  type='text'
+                  placeholder='First Name'
+                  className='input__styles'
+                  
+                />
+                <ErrorMessage name='firstName' render={msg => <div className="error">{msg}</div>} />
+
+                <Field
+                  name='lastName'
+                  placeholder='Last Name'
+                  type='text'
+                  className='input__styles'
+
+                />
+                <ErrorMessage name='lastName' render={msg => <div className="error">{msg}</div>} />
+
+                <Field
+                  name='email'
+                  placeholder='Email'
+                  type='email'
+                  className='input__styles'
+
+                />
+                <ErrorMessage name='email' render={msg => <div className="error">{msg}</div>} />
+
+                <Field
+                  name='password'
+                  placeholder='Password'
+                  type='password'
+                  className='input__styles'
+
+                />
+                <ErrorMessage name='password' render={msg => <div className="error">{msg}</div>} />
+
+                <Field
+                  name='confirmPassword'
+                  placeholder='Confirm Password'
+                  type='password'
+                  className='input__styles'
+
+                />
+                <ErrorMessage name='confirmPassword' render={msg => <div className="error">{msg}</div>} />
+
+                <div className='forgot__password'>
+                  <a href="#">Forgot Password</a>
+                </div>
+                <div className='forgot__password'>
+                  <a href="#">Already Have An Account?</a>
+                </div>
+
+                <Button children={'Register'} type="submit" background={'bg__cyan'} text_transform={'text__transform'} padding={'btn__padding'}
+                 disabled={isSubmitting} 
+                 />
+
+              </Form>
+            )}
+          </Formik>
         </div>
       </div>
     </section>
