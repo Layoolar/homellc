@@ -3,6 +3,7 @@ import { apiCallBegan } from "../../apiActions";
 import { AppDispatch } from "../../configureStore";
 import { PRE_URL } from "../../../utils/ENV/envs";
 import { useNavigate } from 'react-router-dom';
+import { login } from './loginSlice';
 
 const initialState = {
   loading: false,
@@ -14,6 +15,9 @@ const registrationSlice = createSlice({
   name: "registration",
   initialState,
   reducers: {
+    setSuccess: (state, action) => {
+      state.success = false;
+    },
     registrationRequested: (state, action) => {
       state.loading = true;
       state.success = false;
@@ -27,12 +31,12 @@ const registrationSlice = createSlice({
     registrationFailed: (state, action) => {
       state.loading = false;
       state.success = false;
-      state.error = action.payload;
+      state.error = action.payload.response.data.error;
     },
   },
 });
 
-export const { registrationRequested, registrationSuccess, registrationFailed } = registrationSlice.actions;
+export const { setSuccess, registrationRequested, registrationSuccess, registrationFailed } = registrationSlice.actions;
 
 export default registrationSlice.reducer;
 

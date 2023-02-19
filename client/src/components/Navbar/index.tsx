@@ -5,6 +5,7 @@ import Hamburger from '../Icons/Hamburger'
 import LogoIcon from '../Icons/LogoIcon'
 import Searchbar from '../Shared/Searchbar/Index'
 import '../Navbar/navbar.scss'
+import { useSelector, useDispatch } from 'react-redux';
 
 interface Props {
   isNavOpen: boolean,
@@ -13,6 +14,9 @@ interface Props {
 
 const Navbar = ({isNavOpen, setIsNavOpen }: Props) => {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false)
+const userData = useSelector((state: any) => state.authReducers.login.userData);
+const thisUser = JSON.parse(userData);
+console.log(userData);
 
   const handleLogout = () => {
     // Implement the logout logic here, e.g. by calling an API
@@ -35,8 +39,8 @@ const Navbar = ({isNavOpen, setIsNavOpen }: Props) => {
           <div className='user__actions'>
             {/* <img src={require('./profile__user.png')} alt="user__icon" onClick={() => setIsUserMenuOpen(!isUserMenuOpen)} /> */}
             
-            <h2 className='xm__hide'>{'Olayiwola'}</h2>
-            <h2 className='user__logout' onClick={handleLogout}>Logout</h2>
+            <h2 className='xm__hide'>{thisUser.userName}</h2>
+            <button className='user__logout' onClick={handleLogout}>Logout</button>
           </div>
         </div>
       </div>

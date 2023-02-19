@@ -11,6 +11,7 @@ const initialState = {
   userData: "",
   loading: false,
   isLoggedIn: false,
+  error: null,
 };
 
 const loginSlice = createSlice({
@@ -28,10 +29,13 @@ const loginSlice = createSlice({
       console.log("loginReceived", action.payload);
       storeUserDetails(JSON.stringify(action.payload));
       state.userData = JSON.stringify(action.payload);
+      localStorage.setItem("userDetails", JSON.stringify(action.payload)); // store in local storage
     },
     loginRequestFailed: (state, action) => {
       state.loading = false;
-      console.log("loginRequestFailed", action.payload);
+      state.error = action.payload.response.data.error;
+      
+      console.log(state.error);
     },
   },
 });

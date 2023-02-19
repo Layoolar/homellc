@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import LoginIllustration from '../../components/Icons/LoginIllustration'
@@ -8,7 +8,7 @@ import Button from '../../components/Shared/Button/Index'
 import '../Register/register.scss'
 import { useNavigate } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify';
-import { register, registrationSuccess } from '../../store/slices/auth/registerationSlice';
+import { register, registrationSuccess, setSuccess } from '../../store/slices/auth/registerationSlice';
 import { useAppDispatch } from '../../store/hooks';
 import { useSelector } from 'react-redux';
 
@@ -31,11 +31,14 @@ const RegistrationSchema = Yup.object().shape({
 });
 
 
-// const navigate = useNavigate()
 
 const Index = () => {
+
+
   const dispatch = useAppDispatch();
+  const navigate = useNavigate()
   const success = useSelector((state: any) => state.authReducers.register.success);
+    const failed = useSelector((state: any) => state.authReducers.register.error);
   const initialValues: RegistrationValues = {
     firstName: '',
     lastName: '',
@@ -43,6 +46,21 @@ const Index = () => {
     password: '',
     confirmPassword: '',
   };
+
+useEffect(() => {
+   if (success) {
+      toast.success("Registration successful!");
+      navigate("/login");
+      dispatch(setSuccess(false));
+    } else if (failed) {
+      toast.error(failed);
+    }
+}, [success, failed, navigate, dispatch]);
+
+
+
+
+
     const handleSubmit = async (values: RegistrationValues, { setSubmitting, resetForm }: { setSubmitting: (isSubmitting: boolean) => void, resetForm: () => void }) => {
     const { firstName, lastName, email, password } = values;
     await dispatch(register({firstName, lastName, email, password}));

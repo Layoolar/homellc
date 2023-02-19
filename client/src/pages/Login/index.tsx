@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react';
 import LoginIllustration from '../../components/Icons/LoginIllustration'
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify';
 import { login } from "../../store/slices/auth/loginSlice";
 import { useAppDispatch } from "../../store/hooks";
+import { useSelector } from 'react-redux';
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string().email("Email is invalid").required("Please enter your email"),
@@ -25,9 +26,8 @@ const Index = () => {
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-
-
-
+  const success = useSelector((state: any) => state.authReducers.login.isLoggedIn);
+    const failed = useSelector((state: any) => state.authReducers.login.error);
 
 
     const initialValues: LoginValues = {
@@ -35,11 +35,20 @@ const Index = () => {
     password: "",
   };
 
+
+  useEffect(() => {
+   if (success) {
+      toast.success("Login successful!");
+      navigate("/home");
+    } else if (failed) {
+      toast.error(failed);
+    }
+}, [success, failed, navigate]);
+
  const handleSubmit = async (values: LoginValues, { setSubmitting, resetForm }: { setSubmitting: (isSubmitting: boolean) => void; resetForm: () => void }) => {
     try {      
       const { email, password } = values;
     await dispatch(login(values));
-      navigate('/dashboard');
     } catch {
       toast.error("Incorrect email or password");
     } finally {

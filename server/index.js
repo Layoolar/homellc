@@ -89,7 +89,7 @@ app.post('/api/register', async (req, res) => {
       email,
       password: hashedPassword
     })
-    console/log('ok');
+
     res.status(200).json({ status: 'ok' })
   } catch (err) {
     res.status(400).json({ error: "Unable to register" })
@@ -133,7 +133,7 @@ app.post('/api/login', async (req, res) => {
 		)
 		const name = `${user.firstName} ${user.lastName}`; 
     console.log(token);
-		return res.status(200).json({ status: 'ok', userToken: token, username: name  })
+		return res.status(200).json({ status: 'ok', userToken: token, userName: name  })
 	} else {
 		return res.status(400).json({error: 'Invalid password' });
 	}

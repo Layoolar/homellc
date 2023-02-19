@@ -8,7 +8,7 @@
 .nav__wrapper .interactive__board .interactive__board__content {  display: flex; align-items: center; justify-content: space-between; column-gap: 16px; } 
 .nav__wrapper .interactive__board .interactive__board__content > svg {  cursor: pointer; } 
 .nav__wrapper .interactive__board .interactive__board__content .user__actions {  display: flex; align-items: center; justify-content: space-between; width:100%; column-gap: 8px; margin-left: 10px; } 
-// .nav__wrapper .interactive__board .interactive__board__content .user__actions .user__logout {background-color: $cyan-main; color: $white-main; border: 25px;}
+.nav__wrapper .interactive__board .interactive__board__content .user__actions > button {background-color: $cyan-main; color: $white-main; padding: 10px; border: none; border-radius: 5px;}
 .nav__wrapper .interactive__board .interactive__board__content .user__actions > img {  height: 48px; width: 48px; border: 2px solid $navy-blue; border-radius: 50px; } 
 .nav__wrapper .interactive__board .interactive__board__content .user__actions > svg {  cursor: pointer; } 
 .nav__wrapper .interactive__board .interactive__board__content .user__actions > h2 {  font-weight: normal; font-size: 14px; color:$navy-blue; } 
