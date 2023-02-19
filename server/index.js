@@ -114,7 +114,7 @@ app.post('/api/login', async (req, res) => {
 		const name = `${user.firstName} ${user.lastName}`; 
 		return res.status(200).json({ status: 'ok', userToken: token, userName: name  })
 	} else {
-		return res.status(400).json({error: 'Invalid password' });
+		return res.status(400).json({error: 'Invalid login' });
 	}
 })
 

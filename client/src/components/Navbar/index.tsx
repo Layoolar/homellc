@@ -13,11 +13,19 @@ interface Props {
 }
 
 const Navbar = ({isNavOpen, setIsNavOpen }: Props) => {
-  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false)
-  const userData = useSelector((state: any) => state.authReducers.login.userData);
-  const thisUser = JSON.parse(userData);
-  const dispatch = useDispatch();
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const navigate = useNavigate();
+  const userData = useSelector((state: any) => state.authReducers.login.userData);
+  let name = '';
+if (userData) {
+  const thisUser = JSON.parse(userData);
+  name = thisUser.userName;
+} else {
+  navigate('/login')
+}
+  
+  const dispatch = useDispatch();
+  
 
 
   const handleLogout = () => {
@@ -36,7 +44,7 @@ const Navbar = ({isNavOpen, setIsNavOpen }: Props) => {
         </div>
         <div className='interactive__board__content'>
           <div className='user__actions'>
-            <h2 className='xm__hide'>{thisUser.userName}</h2>
+            <h2 className='xm__hide'>{name}</h2>
             <button className='user__logout' onClick={handleLogout}>Logout</button>
           </div>
         </div>
