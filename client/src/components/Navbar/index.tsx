@@ -5,6 +5,7 @@ import Searchbar from '../Shared/Searchbar/Index'
 import '../Navbar/navbar.scss'
 import { useSelector, useDispatch } from 'react-redux';
 import { onLogout } from '../../store/slices/auth/loginSlice'
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
   isNavOpen: boolean,
@@ -16,9 +17,12 @@ const Navbar = ({isNavOpen, setIsNavOpen }: Props) => {
   const userData = useSelector((state: any) => state.authReducers.login.userData);
   const thisUser = JSON.parse(userData);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
 
   const handleLogout = () => {
     dispatch(onLogout())
+    navigate('/login')
   }
 
   return (

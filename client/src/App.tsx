@@ -2,8 +2,6 @@
 
 
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
-
-import { ToastContainer } from 'react-toastify';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Home from './pages/Home';
@@ -32,6 +30,7 @@ function ProtectedRoutes(): JSX.Element {
   const navigate = useNavigate();
 
   useEffect(() => {
+
     if (!userLoggedIn) {
       navigate('/login');
     }
@@ -40,7 +39,6 @@ function ProtectedRoutes(): JSX.Element {
   return (
     <Layout>
       <Routes>
-         <Route path="/" element={<Home />} />
        <Route path="/home" element={<Home />} /> 
       </Routes>
     </Layout>
