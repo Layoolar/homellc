@@ -1,3 +1,15 @@
+###Table of content 
+[Description](#Description) 
+[Capabilities)(#Capabilities) 
+[Extra Features](#Extra Features) 
+[Demo](#Demo) 
+[NPM start](#NPM start) 
+[Node index.js](#Node index.js)
+[Database Configuration](#Database Configuration) 
+
+
+### Description 
+
 A login and registration project using the MERN Stack
 
 This project is an admin dashboard for a loan company where admin can manage users.
@@ -34,7 +46,7 @@ They provide debt-free capital to home buyers and home owners in exchange for sh
 
 They are extremely data-driven while constantly seeking new perspectives to refine our thesis.
 
-# Capabilities
+### Capabilities
 
 - a login form with two input fields: (Email and Password).
 - The details input by the User should be matched against the details present in the Database.
@@ -44,9 +56,26 @@ They are extremely data-driven while constantly seeking new perspectives to refi
   a. Home page has a top navigation bar with a search input field, logged in user first + last name (taken from DB), and a logout button
   b. The home page has a left navigation menu that does not move on scrolling vertically.
 
-# Extra Features
+### Extra Features
 
 - Password is encrypted before being saved in the database
 - Encryption Key and DB connection string is saved as environment variables.
 - A token is sent and sent for identification
 - Rate limiting to avoid bruteforce attacks
+
+### Demo
+[video](https://www.loom.com/share/de0e26662b914f7b97007a713459b02a) 
+
+### NPM start
+Starts the client. 
+Runs the client in the development mode.
+Open [http://localhost:3000](http://localhost:3000)
+
+
+### Node index.js
+Starts the server.
+Runs the server on development mode
+Test the API with [http://localhost:1338](http://localhost:1338)
+
+### Database Configuration
+Change Mongodb connection string in the .env file at the root of the server. 
