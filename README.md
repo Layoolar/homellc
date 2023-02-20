@@ -69,8 +69,6 @@ They are extremely data-driven while constantly seeking new perspectives to refi
 
 [video](https://www.loom.com/share/de0e26662b914f7b97007a713459b02a)
 
-#
-
 ### NPM start
 
 Starts the server and client with 'npm run dev'
