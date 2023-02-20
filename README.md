@@ -1,14 +1,16 @@
-# Table of content 
- - [Description](#description) 
-- [Capabilities](#capabilities) 
-- [Extra Features](#extra-features) 
-- [Demo](#demo) 
-- [NPM start](#npm-start) 
+# Table of content
+
+- [Description](#description)
+- [Capabilities](#capabilities)
+- [Extra Features](#extra-features)
+- [Demo](#demo)
+- [NPM start](#npm-start)
+- [NPM run client](#npm-run-client)
+- [NPM run server](#npm-run-server)
 - [Node index.js](#node-indexjs)
-- [Database Configuration](#database-configuration) 
+- [Database Configuration](#database-configuration)
 
-
-### Description 
+### Description
 
 A login and registration project using the MERN Stack
 
@@ -64,18 +66,29 @@ They are extremely data-driven while constantly seeking new perspectives to refi
 - Rate limiting to avoid bruteforce attacks
 
 ### Demo
-[video](https://www.loom.com/share/de0e26662b914f7b97007a713459b02a) 
+
+[video](https://www.loom.com/share/de0e26662b914f7b97007a713459b02a)
+
+#
 
 ### NPM start
-Starts the client. 
+
+Starts the server and client with 'npm run dev'
+Starts both the server and client concurrently in development mode
+Open [http://localhost:3000](http://localhost:3000)
+
+### NPM run client
+
+Starts the client.
 Runs the client in the development mode.
 Open [http://localhost:3000](http://localhost:3000)
 
+### NPM run server
 
-### Node indexjs
-Start the server with 'node index.js'
+Starts the server with 'nodemon server/index.js'
 Runs the server on development mode
 Test the API with [http://localhost:1338](http://localhost:1338)
 
 ### Database Configuration
-Change Mongodb connection string in the .env file at the root of the server. 
+
+Change Mongodb connection string in the .env file at the root.
